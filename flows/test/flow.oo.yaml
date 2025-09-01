@@ -61,3 +61,11 @@ nodes:
       - handle: absolute_path
         value: true
     task: oomol-file::list_files_from_folder
+  - node_id: markdown-to-epub#1
+    title: "Markdown 转 EPUB #1"
+    inputs_from:
+      - handle: markdown_file
+      - handle: output_path
+      - handle: title
+      - handle: author
+    task: self::markdown-to-epub
