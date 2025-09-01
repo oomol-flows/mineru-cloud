@@ -16,18 +16,26 @@ inputs_def:
     description: "输出的 EPUB 文件保存路径"
     json_schema:
       type: string
+      ui:widget: save
+      ui:options:
+        filters:
+          - extensions:
+              - epub
+            name: EPUB
     nullable: false
 
   - handle: title
     description: "电子书标题（可选，默认使用文件名）"
     json_schema:
       type: string
+    value:
     nullable: true
 
   - handle: author
     description: "电子书作者（可选）"
     json_schema:
       type: string
+    value:
     nullable: true
 
 outputs_def:

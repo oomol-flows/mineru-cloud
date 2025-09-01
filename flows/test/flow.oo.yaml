@@ -61,11 +61,45 @@ nodes:
       - handle: absolute_path
         value: true
     task: oomol-file::list_files_from_folder
+  - node_id: +python#1
+    title: "Python #1"
+    icon: ":logos:python:"
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: file_paths
+          description: If the folder does not exist, an empty array is returned here
+          json_schema:
+            type: array
+            items:
+              type: string
+              ui:widget: file
+      outputs_def:
+        - handle: markdown_file
+          json_schema:
+            type: string
+            ui:widget: file
+      executor:
+        name: python
+        options:
+          entry: scriptlets/+scriptlet#1.py
+    inputs_from:
+      - handle: file_paths
+        from_node:
+          - node_id: list_files_from_folder#1
+            output_handle: file_paths
   - node_id: markdown-to-epub#1
     title: "Markdown 转 EPUB #1"
     inputs_from:
       - handle: markdown_file
+        from_node:
+          - node_id: +python#1
+            output_handle: markdown_file
       - handle: output_path
+        value: /oomol-driver/oomol-storage/image/text.epub
       - handle: title
+        value:
       - handle: author
+        value:
     task: self::markdown-to-epub
