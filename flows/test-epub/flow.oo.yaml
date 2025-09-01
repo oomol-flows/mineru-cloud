@@ -4,9 +4,8 @@ nodes:
     task: self::markdown-to-epub
     inputs_from:
       - handle: markdown_file
-        value: /oomol-driver/sessions/mineru_440a0a00d112/test/1756724554802/full.md
+        value: /oomol-driver/sessions/mineru_440a0a00d112/test/1756723950624/full.md
       - handle: output_path
-        value: /oomol-driver/oomol-storage/test.epub
       - handle: title
         value: "测试电子书"
       - handle: author

@@ -50,48 +50,208 @@ def main(params: Inputs, context: Context) -> Outputs:
         '--epub-chapter-level=2',  # 章节级别
     ]
     
-    # 添加 CSS 样式（可选）
+    # 优化的 CSS 样式 - 参考多看阅读风格
     css_content = """
-    body { 
-        font-family: serif; 
-        margin: 2em; 
-        line-height: 1.6; 
+    /* 基础样式 */
+    body {
+        font-family: "方正书宋", "宋体", "Songti SC", "STSong", serif;
+        font-size: 16px;
+        line-height: 1.8;
+        margin: 1em 1.5em;
+        text-align: justify;
+        color: #333;
     }
-    h1, h2, h3, h4, h5, h6 { 
-        color: #333; 
-        margin-top: 1.5em; 
-        margin-bottom: 0.5em; 
+    
+    /* 标题样式 */
+    h1 {
+        font-family: "方正小标宋", "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-size: 28px;
+        text-align: center;
+        color: #91531d;
+        font-weight: normal;
+        margin-top: 2.5em;
+        margin-bottom: 2.5em;
+        border-bottom: 2px solid #e8c696;
+        padding-bottom: 0.5em;
     }
-    code { 
-        background-color: #f5f5f5; 
-        padding: 0.2em 0.4em; 
-        border-radius: 3px; 
-        font-family: monospace; 
+    
+    h2 {
+        font-family: "方正小标宋", "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-size: 24px;
+        color: #91531d;
+        font-weight: normal;
+        margin-top: 2em;
+        margin-bottom: 1.5em;
+        text-indent: 0;
     }
-    pre { 
-        background-color: #f5f5f5; 
-        padding: 1em; 
-        border-radius: 5px; 
-        overflow-x: auto; 
+    
+    h3 {
+        font-family: "方正小标宋", "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-size: 20px;
+        color: #91531d;
+        font-weight: normal;
+        margin-top: 1.8em;
+        margin-bottom: 1.2em;
+        text-indent: 0;
     }
-    blockquote { 
-        border-left: 4px solid #ddd; 
-        padding-left: 1em; 
-        margin-left: 0; 
-        font-style: italic; 
+    
+    h4, h5, h6 {
+        font-family: "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-size: 18px;
+        color: #91531d;
+        font-weight: normal;
+        margin-top: 1.5em;
+        margin-bottom: 1em;
+        text-indent: 0;
     }
-    table { 
-        border-collapse: collapse; 
-        width: 100%; 
+    
+    /* 段落样式 */
+    p {
+        text-indent: 2em;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
     }
-    th, td { 
-        border: 1px solid #ddd; 
-        padding: 0.5em; 
-        text-align: left; 
+    
+    /* 列表样式 */
+    ul, ol {
+        font-family: "方正楷体", "楷体", "Kaiti SC", serif;
+        margin: 1em 0;
+        padding-left: 2em;
     }
-    th { 
-        background-color: #f5f5f5; 
-        font-weight: bold; 
+    
+    li {
+        margin: 0.3em 0;
+        line-height: 1.6;
+    }
+    
+    /* 代码样式 */
+    code {
+        font-family: "Inconsolata", "SF Mono", "Monaco", "Source Code Pro", monospace;
+        font-size: 14px;
+        background-color: #f8f8f8;
+        color: #91531d;
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        border: 1px solid #e0e0e0;
+    }
+    
+    pre {
+        font-family: "Inconsolata", "SF Mono", "Monaco", "Source Code Pro", monospace;
+        font-size: 14px;
+        background-color: #f8f8f8;
+        color: #333;
+        padding: 1em;
+        border-radius: 5px;
+        border: 1px solid #e0e0e0;
+        overflow-x: auto;
+        line-height: 1.4;
+        margin: 1em 0;
+    }
+    
+    pre code {
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+    }
+    
+    /* 引用样式 */
+    blockquote {
+        font-family: "方正楷体", "楷体", "Kaiti SC", serif;
+        font-style: italic;
+        border-left: 4px solid #91531d;
+        margin: 1em 0;
+        padding: 0.5em 1em;
+        background-color: #f9f9f9;
+        color: #666;
+    }
+    
+    blockquote p {
+        text-indent: 0;
+        margin: 0.5em 0;
+    }
+    
+    /* 表格样式 */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 1em auto;
+        font-family: "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-size: 14px;
+    }
+    
+    th, td {
+        border: 1px solid #ccc;
+        padding: 0.5em 0.8em;
+        text-align: left;
+        line-height: 1.4;
+    }
+    
+    th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+        color: #333;
+    }
+    
+    /* 图片样式 */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1em auto;
+        border-radius: 4px;
+    }
+    
+    /* 链接样式 */
+    a {
+        color: #91531d;
+        text-decoration: underline;
+    }
+    
+    a:hover {
+        color: #b8651f;
+    }
+    
+    /* 强调样式 */
+    strong, b {
+        font-weight: bold;
+        color: #333;
+    }
+    
+    em, i {
+        font-style: italic;
+    }
+    
+    /* 分隔线 */
+    hr {
+        border: none;
+        border-top: 2px solid #e8c696;
+        margin: 2em 0;
+    }
+    
+    /* 脚注样式 */
+    .footnote {
+        font-size: 14px;
+        color: #666;
+        border-top: 1px solid #ccc;
+        margin-top: 2em;
+        padding-top: 1em;
+    }
+    
+    /* 页面布局优化 */
+    @page {
+        margin: 1cm 0.8cm;
+    }
+    
+    /* 章节分页 */
+    h1 {
+        page-break-before: always;
+    }
+    
+    /* 避免孤行寡行 */
+    p {
+        orphans: 2;
+        widows: 2;
     }
     """
     
