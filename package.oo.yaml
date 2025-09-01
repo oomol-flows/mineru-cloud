@@ -7,3 +7,5 @@ scripts:
     poetry install --no-root
 dependencies:
   upload-to-cloud: 0.0.1
+  oomol-file: 0.0.18
+  zip: 0.0.11

@@ -1,0 +1,132 @@
+nodes:
+  - node_id: pdf-extract#1
+    title: "PDF内容提取 #1"
+    inputs_from:
+      - handle: api_token
+        value: ${{OO_SECRET:Custom,mineru,api-key}}
+        from_flow:
+          - input_handle: api_token
+      - handle: pdf_url
+        from_node:
+          - node_id: upload-to-cloud#1
+            output_handle: cache_url
+      - handle: enable_formula
+        value: true
+        from_flow:
+          - input_handle: enable_formula
+      - handle: seed
+        value:
+      - handle: extra_formats
+        value:
+      - handle: page_ranges
+        value:
+      - handle: callback
+        value:
+      - handle: data_id
+        value:
+      - handle: language
+        value:
+      - handle: model_version
+        value:
+      - handle: enable_table
+        value: true
+        from_flow:
+          - input_handle: enable_table
+      - handle: is_ocr
+        value: true
+        from_flow:
+          - input_handle: is_ocr
+    task: self::pdf-extract
+  - node_id: upload-to-cloud#1
+    title: "Upload File to Cloud #1"
+    inputs_from:
+      - handle: file
+        value: /oomol-driver/oomol-storage/oopilot-instructions.pdf
+        from_flow:
+          - input_handle: file
+    task: upload-to-cloud::upload-to-cloud
+  - node_id: get-task-result#2
+    title: "获取任务结果 #2"
+    inputs_from:
+      - handle: api_token
+        value: ${{OO_SECRET:Custom,mineru,api-key}}
+      - handle: task_id
+        from_node:
+          - node_id: pdf-extract#1
+            output_handle: task_id
+      - handle: max_retries
+        value: 60
+    task: self::get-task-result
+  - node_id: +python#1
+    title: "Python #1"
+    icon: ":logos:python:"
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: response_data
+          description: 完整的响应数据
+          json_schema:
+            type: object
+      outputs_def:
+        - handle: full_zip_url
+          json_schema:
+            type: string
+      executor:
+        name: python
+        options:
+          entry: scriptlets/+scriptlet#1.py
+    inputs_from:
+      - handle: response_data
+        from_node:
+          - node_id: get-task-result#2
+            output_handle: task_data
+inputs_def:
+  - handle: file
+    json_schema:
+      type: string
+      ui:widget: file
+    nullable: false
+    value: /oomol-driver/oomol-storage/oopilot-instructions.pdf
+    executor_name: nodejs
+  - handle: api_token
+    json_schema:
+      contentMediaType: oomol/secret
+      type: string
+    nullable: false
+    description: MinerU API Token，从官网申请获取
+    value: ${{OO_SECRET:Custom,mineru,api-key}}
+    executor_name: python
+  - handle: is_ocr
+    json_schema:
+      type: boolean
+    nullable: true
+    description: 是否启动OCR功能
+    value: true
+    executor_name: python
+  - handle: enable_formula
+    json_schema:
+      type: boolean
+    nullable: true
+    description: 是否开启公式识别
+    value: true
+    executor_name: python
+  - handle: enable_table
+    json_schema:
+      type: boolean
+    nullable: true
+    description: 是否开启表格识别
+    value: true
+    executor_name: python
+outputs_def:
+  - handle: full_zip_url
+    json_schema:
+      type: string
+    nullable: false
+    executor_name: python
+outputs_from:
+  - handle: full_zip_url
+    from_node:
+      - node_id: +python#1
+        output_handle: full_zip_url
+title: PDF to markdown

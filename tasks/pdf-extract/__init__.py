@@ -1,20 +1,24 @@
-# region generated meta
+#region generated meta
 import typing
-
 class Inputs(typing.TypedDict):
-    api_token: str
     pdf_url: str
-    enable_ocr: bool
-    enable_formula: bool
-
-
+    api_token: str
+    is_ocr: bool | None
+    enable_formula: bool | None
+    enable_table: bool | None
+    model_version: typing.Literal["pipeline", "vlm"] | None
+    language: typing.Literal["ch", "en", "fr", "german", "korean", "japan", "arabic", "ta", "te", "ka", "thai", "la", "ru", "vi", "ur", "fa", "uk", "uz", "ug", "hi", "mr", "ne", "sa", "pu", "gu", "ja", "bn", "as", "or"] | None
+    data_id: str | None
+    callback: str | None
+    page_ranges: str | None
+    extra_formats: list[typing.Any] | None
+    seed: str | None
 class Outputs(typing.TypedDict):
     task_id: str
-    status_code: int
+    status_code: float
     response_data: dict
     extract_data: dict
-
-# endregion
+#endregion
 
 import requests
 from oocana import Context
@@ -25,7 +29,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     使用MinerU API从PDF文件中提取内容
     
     Args:
-        params: 包含API token、PDF URL、OCR和公式识别配置
+        params: 包含API token、PDF URL和各种提取选项配置
         context: OOMOL上下文对象
         
     Returns:
@@ -40,11 +44,32 @@ def main(params: Inputs, context: Context) -> Outputs:
         "Authorization": f"Bearer {token}"
     }
     
+    # 构建请求数据，包含所有支持的参数
     data = {
-        "url": params["pdf_url"],
-        "is_ocr": params["enable_ocr"],
-        "enable_formula": params["enable_formula"],
+        "url": params.get("pdf_url"),
     }
+    
+    # 添加可选参数
+    if params.get("is_ocr") is not None:
+        data["is_ocr"] = params["is_ocr"]
+    if params.get("enable_formula") is not None:
+        data["enable_formula"] = params["enable_formula"]
+    if params.get("enable_table") is not None:
+        data["enable_table"] = params["enable_table"]
+    if params.get("language") is not None:
+        data["language"] = params["language"]
+    if params.get("data_id") is not None:
+        data["data_id"] = params["data_id"]
+    if params.get("callback") is not None:
+        data["callback"] = params["callback"]
+    if params.get("seed") is not None:
+        data["seed"] = params["seed"]
+    if params.get("extra_formats") is not None:
+        data["extra_formats"] = params["extra_formats"]
+    if params.get("page_ranges") is not None:
+        data["page_ranges"] = params["page_ranges"]
+    if params.get("model_version") is not None:
+        data["model_version"] = params["model_version"]
     
     try:
         response = requests.post(url, headers=headers, json=data)
@@ -60,6 +85,7 @@ def main(params: Inputs, context: Context) -> Outputs:
                 "data": {
                     "状态码": status_code,
                     "任务ID": task_id,
+                    "请求参数": data,
                     "响应数据": response_json
                 }
             })

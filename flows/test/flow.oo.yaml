@@ -1,0 +1,63 @@
+nodes:
+  - node_id: flow-1#2
+    title: "PDF 转换 #2"
+    inputs_from:
+      - handle: file
+        value: /oomol-driver/oomol-storage/OOMOL （悟墨）BP 新版本_副本.pdf
+      - handle: api_token
+        value: ${{OO_SECRET:Custom,mineru,api-key}}
+      - handle: is_ocr
+        value: true
+      - handle: enable_formula
+        value: true
+      - handle: enable_table
+        value: true
+    subflow: self::pdf-to-markdown
+  - node_id: url_to_file#1
+    title: "URL to file  #1"
+    inputs_from:
+      - handle: url
+        from_node:
+          - node_id: flow-1#2
+            output_handle: full_zip_url
+      - handle: file_dir
+        value: null
+      - handle: query
+        value:
+          {}
+      - handle: headers
+        value:
+          {}
+      - handle: timeout
+        value: 0
+      - handle: retry_times
+        value: 1
+      - handle: reset_filename
+        value: true
+    task: oomol-file::url_to_file
+  - node_id: extract_zip#1
+    title: "Extract ZIP #1"
+    inputs_from:
+      - handle: zip_file
+        from_node:
+          - node_id: url_to_file#1
+            output_handle: file_path
+      - handle: zip_dir
+        value: null
+      - handle: password
+        value: null
+    task: zip::extract_zip
+  - node_id: list_files_from_folder#1
+    title: "List files from folder #1"
+    inputs_from:
+      - handle: folder
+        from_node:
+          - node_id: extract_zip#1
+            output_handle: output
+      - handle: sort
+        value: false
+      - handle: traverse
+        value: false
+      - handle: absolute_path
+        value: true
+    task: oomol-file::list_files_from_folder

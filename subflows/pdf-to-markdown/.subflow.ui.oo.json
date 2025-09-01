@@ -1,0 +1,56 @@
+{
+  "nodes": {
+    "pdf-extract#1": {
+      "contentWidth": 554.5949074365046,
+      "rfNode": {
+        "position": {
+          "x": 972,
+          "y": 0
+        }
+      }
+    },
+    "upload-to-cloud#1": {
+      "rfNode": {
+        "position": {
+          "x": 486,
+          "y": 468
+        }
+      }
+    },
+    "get-task-result#2": {
+      "rfNode": {
+        "position": {
+          "x": 1593,
+          "y": 338
+        }
+      }
+    },
+    "+python#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 2079,
+          "y": 150
+        }
+      }
+    }
+  },
+  "pseudoNodes": {
+    "input": {
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": 396.5
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 2595,
+          "y": 450.5
+        }
+      }
+    }
+  }
+}

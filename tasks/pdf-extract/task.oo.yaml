@@ -1,8 +1,14 @@
 title: "PDF内容提取"
-description: "使用MinerU API从PDF文件中提取文本、表格和公式内容"
+description: "使用MinerU API从PDF文件中提取文本、表格和公式内容，支持多种格式导出"
 icon: ":carbon:document-pdf:"
 
 inputs_def:
+  - handle: pdf_url
+    description: "PDF文件的URL地址，支持.pdf、.doc、.docx、.ppt、.pptx、.png、.jpg、.jpeg等格式"
+    json_schema:
+      type: string
+    nullable: false
+
   - handle: api_token
     description: "MinerU API Token，从官网申请获取"
     json_schema:
@@ -11,25 +17,110 @@ inputs_def:
     value: ${{OO_SECRET:MinerU,MinerU,API_TOKEN}}
     nullable: false
 
-  - handle: pdf_url
-    description: "PDF文件的URL地址"
-    json_schema:
-      type: string
-    nullable: false
-
-  - handle: enable_ocr
-    description: "是否启用OCR识别扫描版PDF"
+  - handle: is_ocr
+    description: "是否启动OCR功能"
     json_schema:
       type: boolean
     value: true
-    nullable: false
+    nullable: true
 
   - handle: enable_formula
-    description: "是否启用公式识别"
+    description: "是否开启公式识别"
     json_schema:
       type: boolean
-    value: false
-    nullable: false
+    value: true
+    nullable: true
+
+  - handle: enable_table
+    description: "是否开启表格识别"
+    json_schema:
+      type: boolean
+    value: true
+    nullable: true
+
+  - group: Group
+    collapsed: false
+
+  - handle: model_version
+    description: "MinerU模型版本"
+    json_schema:
+      type: string
+      enum:
+        - pipeline
+        - vlm
+    value: pipeline
+    nullable: true
+
+  - handle: language
+    description: "指定文档语言"
+    json_schema:
+      type: string
+      enum:
+        - ch
+        - en
+        - fr
+        - german
+        - korean
+        - japan
+        - arabic
+        - ta
+        - te
+        - ka
+        - thai
+        - la
+        - ru
+        - vi
+        - ur
+        - fa
+        - uk
+        - uz
+        - ug
+        - hi
+        - mr
+        - ne
+        - sa
+        - pu
+        - gu
+        - ja
+        - bn
+        - as
+        - or
+    value: ch
+    nullable: true
+
+  - handle: data_id
+    description: "解析对象对应的数据ID，用于唯一标识业务数据（可选）"
+    json_schema:
+      type: string
+    value:
+    nullable: true
+
+  - handle: callback
+    description: 解析结果回调通知URL（可选）
+    json_schema:
+      type: string
+    value:
+    nullable: true
+
+  - handle: page_ranges
+    description: 指定页码范围，格式为逗号分隔的字符串，如："2,4-6"
+    json_schema:
+      type: string
+    value:
+    nullable: true
+
+  - handle: extra_formats
+    description: 额外的导出格式，可选docx、html、latex
+    json_schema:
+      type: array
+    value:
+    nullable: true
+  - handle: seed
+    description: 随机字符串，用于回调通知请求中的签名（callback时必须提供）
+    json_schema:
+      type: string
+    value:
+    nullable: true
 
 outputs_def:
   - handle: task_id
@@ -57,3 +148,4 @@ executor:
   options:
     entry: __init__.py
     spawn: false
+private: true

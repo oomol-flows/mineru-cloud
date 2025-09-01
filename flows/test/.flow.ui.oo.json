@@ -1,0 +1,55 @@
+{
+  "nodes": {
+    "flow-1#2": {
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": 54
+        }
+      }
+    },
+    "url_to_file#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 486,
+          "y": 0
+        }
+      },
+      "sections": {
+        "inputs": {
+          "collapsed": {
+            "query": {
+              "[]": true
+            }
+          }
+        }
+      }
+    },
+    "extract_zip#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 1002,
+          "y": 81
+        }
+      }
+    },
+    "list_files_from_folder#1": {
+      "contentWidth": 463.1607666015625,
+      "rfNode": {
+        "position": {
+          "x": 1518,
+          "y": 81
+        }
+      },
+      "sections": {
+        "inputs": {
+          "groupCollapsed": {
+            "more": true
+          }
+        }
+      }
+    }
+  }
+}
