@@ -1,0 +1,59 @@
+title: "PDF内容提取"
+description: "使用MinerU API从PDF文件中提取文本、表格和公式内容"
+icon: ":carbon:document-pdf:"
+
+inputs_def:
+  - handle: api_token
+    description: "MinerU API Token，从官网申请获取"
+    json_schema:
+      contentMediaType: oomol/secret
+      type: string
+    value: ${{OO_SECRET:MinerU,MinerU,API_TOKEN}}
+    nullable: false
+
+  - handle: pdf_url
+    description: "PDF文件的URL地址"
+    json_schema:
+      type: string
+    nullable: false
+
+  - handle: enable_ocr
+    description: "是否启用OCR识别扫描版PDF"
+    json_schema:
+      type: boolean
+    value: true
+    nullable: false
+
+  - handle: enable_formula
+    description: "是否启用公式识别"
+    json_schema:
+      type: boolean
+    value: false
+    nullable: false
+
+outputs_def:
+  - handle: task_id
+    description: "提取任务ID"
+    json_schema:
+      type: string
+
+  - handle: status_code
+    description: "HTTP响应状态码"
+    json_schema:
+      type: number
+
+  - handle: response_data
+    description: "完整的API响应数据"
+    json_schema:
+      type: object
+
+  - handle: extract_data
+    description: "提取的数据内容"
+    json_schema:
+      type: object
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false

@@ -1,0 +1,48 @@
+title: "获取任务结果"
+description: "从 MinerU API 获取 PDF 提取任务的结果"
+icon: ":carbon:document-download:"
+
+inputs_def:
+  - handle: api_token
+    description: "MinerU API Token"
+    json_schema:
+      contentMediaType: oomol/secret
+      type: string
+    value: ${{OO_SECRET:Custom,mineru,api-key}}
+
+  - handle: task_id
+    description: "任务ID"
+    json_schema:
+      type: string
+    nullable: false
+  - handle: max_retries
+    json_schema:
+      type: number
+      ui:options:
+        step: 1
+      minimum: 30
+      exclusiveMinimum: 30
+    nullable: true
+    value: 60
+
+outputs_def:
+  - handle: status_code
+    description: "HTTP状态码"
+    json_schema:
+      type: number
+
+  - handle: response_data
+    description: "完整的响应数据"
+    json_schema:
+      type: object
+
+  - handle: task_data
+    description: "任务结果数据"
+    json_schema:
+      type: object
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
