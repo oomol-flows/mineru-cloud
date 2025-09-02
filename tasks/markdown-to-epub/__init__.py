@@ -54,7 +54,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     css_content = """
     /* 基础样式 */
     body {
-        font-family: "方正书宋", "宋体", "Songti SC", "STSong", serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, "Songti SC", "STSong", serif;
         font-size: 16px;
         line-height: 1.8;
         margin: 1em 1.5em;
@@ -64,11 +64,11 @@ def main(params: Inputs, context: Context) -> Outputs:
     
     /* 标题样式 */
     h1 {
-        font-family: "方正小标宋", "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Display", "Helvetica Neue", sans-serif;
         font-size: 28px;
         text-align: center;
         color: #91531d;
-        font-weight: normal;
+        font-weight: 600;
         margin-top: 2.5em;
         margin-bottom: 2.5em;
         border-bottom: 2px solid #e8c696;
@@ -76,30 +76,30 @@ def main(params: Inputs, context: Context) -> Outputs:
     }
     
     h2 {
-        font-family: "方正小标宋", "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Display", "Helvetica Neue", sans-serif;
         font-size: 24px;
         color: #91531d;
-        font-weight: normal;
+        font-weight: 600;
         margin-top: 2em;
         margin-bottom: 1.5em;
         text-indent: 0;
     }
     
     h3 {
-        font-family: "方正小标宋", "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Display", "Helvetica Neue", sans-serif;
         font-size: 20px;
         color: #91531d;
-        font-weight: normal;
+        font-weight: 600;
         margin-top: 1.8em;
         margin-bottom: 1.2em;
         text-indent: 0;
     }
     
     h4, h5, h6 {
-        font-family: "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Display", "Helvetica Neue", sans-serif;
         font-size: 18px;
         color: #91531d;
-        font-weight: normal;
+        font-weight: 600;
         margin-top: 1.5em;
         margin-bottom: 1em;
         text-indent: 0;
@@ -114,7 +114,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     
     /* 列表样式 */
     ul, ol {
-        font-family: "方正楷体", "楷体", "Kaiti SC", serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
         margin: 1em 0;
         padding-left: 2em;
     }
@@ -126,7 +126,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     
     /* 代码样式 */
     code {
-        font-family: "Inconsolata", "SF Mono", "Monaco", "Source Code Pro", monospace;
+        font-family: "SF Mono", "Monaco", "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
         font-size: 14px;
         background-color: #f8f8f8;
         color: #91531d;
@@ -136,7 +136,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     }
     
     pre {
-        font-family: "Inconsolata", "SF Mono", "Monaco", "Source Code Pro", monospace;
+        font-family: "SF Mono", "Monaco", "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
         font-size: 14px;
         background-color: #f8f8f8;
         color: #333;
@@ -157,7 +157,7 @@ def main(params: Inputs, context: Context) -> Outputs:
     
     /* 引用样式 */
     blockquote {
-        font-family: "方正楷体", "楷体", "Kaiti SC", serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, serif;
         font-style: italic;
         border-left: 4px solid #91531d;
         margin: 1em 0;
@@ -176,7 +176,7 @@ def main(params: Inputs, context: Context) -> Outputs:
         border-collapse: collapse;
         width: 100%;
         margin: 1em auto;
-        font-family: "方正兰亭黑", "黑体", "Heiti SC", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Display", "Helvetica Neue", sans-serif;
         font-size: 14px;
     }
     

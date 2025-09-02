@@ -22,8 +22,8 @@ inputs_def:
         step: 1
       minimum: 30
       exclusiveMinimum: 30
+    value:
     nullable: true
-    value: 60
 
 outputs_def:
   - handle: status_code

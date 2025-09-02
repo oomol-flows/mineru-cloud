@@ -56,6 +56,8 @@ nodes:
             output_handle: task_id
       - handle: max_retries
         value: 60
+        from_flow:
+          - input_handle: max_retries
     task: self::get-task-result
   - node_id: +python#1
     title: "Python #1"
@@ -87,36 +89,45 @@ inputs_def:
       type: string
       ui:widget: file
     nullable: false
-    value: /oomol-driver/oomol-storage/oopilot-instructions.pdf
     executor_name: nodejs
   - handle: api_token
+    description: MinerU API Token，从官网申请获取
     json_schema:
       contentMediaType: oomol/secret
       type: string
-    nullable: false
-    description: MinerU API Token，从官网申请获取
     value: ${{OO_SECRET:Custom,mineru,api-key}}
+    nullable: false
     executor_name: python
   - handle: is_ocr
+    description: 是否启动OCR功能
     json_schema:
       type: boolean
-    nullable: true
-    description: 是否启动OCR功能
     value: true
+    nullable: true
     executor_name: python
   - handle: enable_formula
+    description: 是否开启公式识别
     json_schema:
       type: boolean
-    nullable: true
-    description: 是否开启公式识别
     value: true
+    nullable: true
     executor_name: python
   - handle: enable_table
+    description: 是否开启表格识别
     json_schema:
       type: boolean
-    nullable: true
-    description: 是否开启表格识别
     value: true
+    nullable: true
+    executor_name: python
+  - handle: max_retries
+    json_schema:
+      type: number
+      ui:options:
+        step: 1
+      minimum: 30
+      exclusiveMinimum: 30
+    value: 360
+    nullable: true
     executor_name: python
 outputs_def:
   - handle: full_zip_url
