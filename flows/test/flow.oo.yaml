@@ -103,4 +103,6 @@ nodes:
         value:
       - handle: author
         value:
+      - handle: theme
+        value: duokan
     task: self::markdown-to-epub

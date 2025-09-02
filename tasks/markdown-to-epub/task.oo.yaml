@@ -38,6 +38,18 @@ inputs_def:
     value:
     nullable: true
 
+  - handle: theme
+    description: "EPUB 主题样式（可选，默认为多看风格）"
+    json_schema:
+      type: string
+      enum:
+        - duokan
+        - minimal
+        - modern
+        - classic
+    value: duokan
+    nullable: true
+
 outputs_def:
   - handle: epub_file
     description: "生成的 EPUB 文件路径"
