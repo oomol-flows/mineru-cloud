@@ -8,11 +8,25 @@ inputs_def:
       items:
         type: string
         ui:widget: file
+  - handle: char_limit
+    description: ""
+    json_schema:
+      type: number
+      ui:options:
+        step: 1
+      minimum: 500
+      maximum: 10000
+    value:
+    nullable: true
 outputs_def:
   - handle: markdown_file
     json_schema:
       type: string
       ui:widget: file
+  - handle: first_500_chars
+    description: First 500 characters from the markdown file
+    json_schema:
+      type: string
 executor:
   name: python
   options:

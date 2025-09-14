@@ -126,11 +126,17 @@ nodes:
       - handle: title
         value: null
         from_flow:
-          - input_handle: title
+          []
+        from_node:
+          - node_id: llm#1
+            output_handle: title
       - handle: author
         value: null
         from_flow:
-          - input_handle: author
+          []
+        from_node:
+          - node_id: llm#1
+            output_handle: author
       - handle: theme
         value: minimal
         from_flow:
@@ -195,6 +201,84 @@ nodes:
         from_node:
           - node_id: list_files_from_folder#1
             output_handle: file_paths
+      - handle: char_limit
+        value:
+  - node_id: llm#1
+    title: "LLM #1"
+    inputs_from:
+      - handle: messages
+        value: null
+      - handle: timeout
+        value: 30
+      - handle: retry_times
+        value: 0
+      - handle: retry_sleep
+        value: 3.5
+      - handle: model
+        value:
+          model: deepseek-chat
+          temperature: 0.5
+          top_p: 1
+          max_tokens: 8192
+      - handle: template
+        value:
+          - role: user
+            content: "我需要确定书本的名称和作者：
+
+              如果用户主动传入了书名：{{title}} 和
+              作者：{{author}}，就以用户的要求的名字返回出去。 如果没有传那么读取，书本的前开头的文字：
+              {{first_500_chars}}，分析后返回。
+
+              如果分析不出来没有，就用对应的语言返回未知。"
+        schema_overrides:
+          - schema:
+              type: array
+      - handle: skills
+        value:
+          []
+      - handle: stream
+        value: true
+      - handle: first_500_chars
+        value: hello!
+        from_node:
+          - node_id: get-md-from-folder#1
+            output_handle: first_500_chars
+      - handle: title
+        value:
+        from_flow:
+          - input_handle: title
+      - handle: author
+        value:
+        from_flow:
+          - input_handle: author
+    task: llm::llm
+    inputs_def:
+      - handle: first_500_chars
+        json_schema:
+          type: string
+          ui:widget: text
+        value: hello!
+      - handle: title
+        json_schema:
+          type: string
+        nullable: true
+        description: 电子书标题（可选，默认使用文件名）
+      - handle: author
+        json_schema:
+          type: string
+        nullable: true
+        description: 电子书作者（可选）
+    outputs_def:
+      - handle: title
+        json_schema:
+          type: string
+        nullable: true
+        description: 电子书标题（可选，默认使用文件名）
+      - handle: author
+        json_schema:
+          type: string
+        nullable: true
+        description: 电子书作者（可选）
 inputs_def:
   - handle: file
     json_schema:

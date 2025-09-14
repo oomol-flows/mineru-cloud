@@ -1,0 +1,10 @@
+title: Test Enhanced Get MD From Folder with Custom Char Limit
+nodes:
+  - node_id: get-md-from-folder#1
+    task: self::get-md-from-folder
+    inputs_from:
+      - handle: file_paths
+        value:
+          - "/app/workspace/test_input.md"
+          - "/app/workspace/README.md"
+      - handle: char_limit

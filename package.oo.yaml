@@ -8,6 +8,7 @@ dependencies:
   oomol-file: 0.0.18
   zip: 0.0.13
   downloader: 0.0.3
+  llm: 0.3.5
 icon: ./icon.png
 name: mineru-cloud
 repository: https://github.com/oomol-flows/mineru-cloud.git

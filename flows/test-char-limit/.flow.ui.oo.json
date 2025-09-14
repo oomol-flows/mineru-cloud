@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "pre-detection_pdf#1": {
+    "get-md-from-folder#1": {
       "rfNode": {
         "position": {
           "x": 0,
