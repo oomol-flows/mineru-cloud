@@ -9,3 +9,8 @@ dependencies:
   zip: 0.0.13
   downloader: 0.0.3
 icon: ./icon.png
+name: mineru-cloud
+repository: https://github.com/oomol-flows/mineru-cloud.git
+releaseNotes: init
+description: "%key%"
+displayName: "%mineru-cloud%"

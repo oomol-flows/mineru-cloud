@@ -1,5 +1,7 @@
 {
   "mineru-api-pdf": "Get the results of PDF extraction tasks from the MinerU API",
   "mineru-api-token": "MinerU API Token",
-  "markdown-epub": "Convert Markdown files to EPUB e-book format"
+  "markdown-epub": "Convert Markdown files to EPUB e-book format",
+  "mineru-cloud": "Mineru Cloud",
+  "key": "A powerful document processing toolkit that transforms PDF documents into various formats using advanced AI-powered extraction technology. This toolkit is designed for users who need to convert PDF documents into editable and structured formats without requiring technical knowledge."
 }
