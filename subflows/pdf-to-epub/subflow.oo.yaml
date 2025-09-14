@@ -112,41 +112,12 @@ nodes:
       - handle: absolute_path
         value: true
     task: oomol-file::list_files_from_folder
-  - node_id: +python#3
-    title: "Python #3"
-    icon: ":logos:python:"
-    inputs_from:
-      - handle: file_paths
-        from_node:
-          - node_id: list_files_from_folder#1
-            output_handle: file_paths
-    task:
-      ui:
-        default_width: 450
-      inputs_def:
-        - handle: file_paths
-          description: If the folder does not exist, an empty array is returned here
-          json_schema:
-            type: array
-            items:
-              type: string
-              ui:widget: file
-      outputs_def:
-        - handle: markdown_file
-          json_schema:
-            type: string
-            ui:widget: file
-      executor:
-        name: python
-        options:
-          entry: scriptlets/+scriptlet#3.py
-          spawn: false
   - node_id: markdown-to-epub#1
     title: "Markdown 转 EPUB #1"
     inputs_from:
       - handle: markdown_file
         from_node:
-          - node_id: +python#3
+          - node_id: get-md-from-folder#1
             output_handle: markdown_file
       - handle: output_path
         value: /oomol-driver/oomol-storage/epub/hello.epub
@@ -154,12 +125,21 @@ nodes:
           - input_handle: output_path
       - handle: title
         value: null
+        from_flow:
+          - input_handle: title
       - handle: author
         value: null
+        from_flow:
+          - input_handle: author
       - handle: theme
         value: minimal
+        from_flow:
+          - input_handle: theme
       - handle: cover_image
         value:
+        from_node:
+          - node_id: pre-detection_pdf#1
+            output_handle: cover_image
     task: self::markdown-to-epub
   - node_id: url2file#1
     title: "URL to file #1"
@@ -208,6 +188,13 @@ nodes:
       - handle: file
         from_flow:
           - input_handle: file
+  - node_id: get-md-from-folder#1
+    task: self::get-md-from-folder
+    inputs_from:
+      - handle: file_paths
+        from_node:
+          - node_id: list_files_from_folder#1
+            output_handle: file_paths
 inputs_def:
   - handle: file
     json_schema:
@@ -230,6 +217,7 @@ inputs_def:
     nullable: false
     executor_name: python
   - handle: output_path
+    description: 输出的 EPUB 文件保存路径
     json_schema:
       type: string
       ui:widget: save
@@ -238,9 +226,34 @@ inputs_def:
           - extensions:
               - epub
             name: EPUB
-    nullable: false
-    description: 输出的 EPUB 文件保存路径
     value: /oomol-driver/oomol-storage/epub/hello.epub
+    nullable: false
+    executor_name: python
+  - handle: title
+    json_schema:
+      type: string
+    nullable: true
+    description: 电子书标题（可选，默认使用文件名）
+    value:
+    executor_name: python
+  - handle: author
+    json_schema:
+      type: string
+    nullable: true
+    description: 电子书作者（可选）
+    value:
+    executor_name: python
+  - handle: theme
+    json_schema:
+      type: string
+      enum:
+        - duokan
+        - minimal
+      ui:options:
+        {}
+    nullable: true
+    description: EPUB 主题样式（可选，默认为多看风格）
+    value: minimal
     executor_name: python
   - handle: is_ocr
     description: 是否启动OCR功能

@@ -1,0 +1,22 @@
+ui:
+  default_width: 450
+inputs_def:
+  - handle: file_paths
+    description: If the folder does not exist, an empty array is returned here
+    json_schema:
+      type: array
+      items:
+        type: string
+        ui:widget: file
+outputs_def:
+  - handle: markdown_file
+    json_schema:
+      type: string
+      ui:widget: file
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+title: Get md from folder
+icon: ":carbon:ibm-secure-infrastructure-on-vpc-for-regulated-industries:"

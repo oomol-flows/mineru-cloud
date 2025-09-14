@@ -142,3 +142,27 @@ nodes:
       - handle: cover_image
         value: /oomol-driver/oomol-storage/flipped_1757305917896.jpg
     task: self::markdown-to-epub
+  - node_id: pdf-to-epub#1
+    title: "PDF to EPUB #1"
+    inputs_from:
+      - handle: file
+        value: /oomol-driver/oomol-storage/compressed_output.pdf
+      - handle: api_token
+        value: ${{OO_SECRET:Custom,mineru,api-key}}
+      - handle: output_path
+        value: /oomol-driver/oomol-storage/md/md2.epub
+      - handle: is_ocr
+        value: true
+      - handle: enable_formula
+        value: true
+      - handle: enable_table
+        value: true
+      - handle: max_retries
+        value: null
+      - handle: title
+        value:
+      - handle: author
+        value:
+      - handle: theme
+        value: minimal
+    subflow: self::pdf-to-epub

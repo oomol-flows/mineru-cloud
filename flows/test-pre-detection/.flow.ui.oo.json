@@ -1,0 +1,7 @@
+{
+  "ui": {
+    "title": "Test PDF Pre-detection with Cover Image",
+    "icon": ":carbon:document-security:",
+    "default_width": 450
+  }
+}

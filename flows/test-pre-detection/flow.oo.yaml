@@ -1,0 +1,7 @@
+nodes:
+  - node_id: pre-detection_pdf#1
+    title: "PDF Pre-detection Test #1"
+    inputs_from:
+      - handle: file
+        value: /oomol-driver/oomol-storage/pdf/page_range_1_1-100.pdf
+    task: self::pre-detection_pdf
