@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 scripts:
   bootstrap: |
     npm install
@@ -12,6 +12,6 @@ dependencies:
 icon: ./icon.png
 name: mineru-cloud
 repository: https://github.com/oomol-flows/mineru-cloud.git
-releaseNotes: init
 description: "%key%"
 displayName: "%mineru-cloud%"
+releaseNotes: add flow

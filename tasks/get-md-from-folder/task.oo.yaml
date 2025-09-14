@@ -34,3 +34,4 @@ executor:
     spawn: false
 title: Get md from folder
 icon: ":carbon:ibm-secure-infrastructure-on-vpc-for-regulated-industries:"
+private: true
