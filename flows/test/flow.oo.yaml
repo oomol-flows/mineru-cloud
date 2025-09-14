@@ -3,6 +3,7 @@ nodes:
     title: "PDF 转换 #2"
     inputs_from:
       - handle: file
+        value: /oomol-driver/oomol-storage/pdf/page_range_1_1-100.pdf
       - handle: api_token
         value: ${{OO_SECRET:Custom,mineru,api-key}}
       - handle: is_ocr
@@ -12,37 +13,15 @@ nodes:
       - handle: enable_table
         value: true
       - handle: max_retries
-        value: 360
+        value:
     subflow: self::pdf-to-markdown
-  - node_id: url_to_file#1
-    title: "URL to file  #1"
-    inputs_from:
-      - handle: url
-        from_node:
-          - node_id: flow-1#2
-            output_handle: full_zip_url
-      - handle: file_dir
-        value: null
-      - handle: query
-        value:
-          {}
-      - handle: headers
-        value:
-          {}
-      - handle: timeout
-        value: 0
-      - handle: retry_times
-        value: 1
-      - handle: reset_filename
-        value: true
-    task: oomol-file::url_to_file
   - node_id: extract_zip#1
     title: "Extract ZIP #1"
     inputs_from:
       - handle: zip_file
         from_node:
-          - node_id: url_to_file#1
-            output_handle: file_path
+          - node_id: url2file#1
+            output_handle: file
       - handle: zip_dir
         value: null
       - handle: password
@@ -104,5 +83,59 @@ nodes:
       - handle: author
         value:
       - handle: theme
-        value: duokan
+        value: modern
     task: self::markdown-to-epub
+  - node_id: url2file#1
+    title: "URL to file #1"
+    inputs_from:
+      - handle: url
+        from_node:
+          - node_id: flow-1#2
+            output_handle: epub_file
+      - handle: saved_folder
+        value: null
+      - handle: ensure_folder
+        value: false
+      - handle: file_head
+        value: null
+      - handle: if_existing
+        value: override
+      - handle: threads_count
+        value: 1
+      - handle: headers
+        value:
+          {}
+      - handle: cookies
+        value:
+          {}
+      - handle: window_width
+        value: 7
+      - handle: failure_ladder
+        value:
+          - 5
+      - handle: min_segment_length
+        value: 1048576
+      - handle: once_fetch_size
+        value: 16384
+      - handle: timeout
+        value: 30
+      - handle: retry_times
+        value: 0
+      - handle: retry_sleep
+        value: 0
+    subflow: downloader::url2file
+  - node_id: pdf-to-markdown#1
+    title: "PDF to markdown #1"
+    inputs_from:
+      - handle: file
+      - handle: api_token
+        value: ${{OO_SECRET:Custom,mineru,api-key}}
+      - handle: is_ocr
+        value: true
+      - handle: enable_formula
+        value: true
+      - handle: enable_table
+        value: true
+      - handle: max_retries
+        value: null
+    subflow: self::pdf-to-markdown

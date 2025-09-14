@@ -28,9 +28,15 @@ def main(params: Inputs, context: Context) -> Outputs:
     Returns:
         包含状态码、完整响应数据和任务结果数据的字典
     """
+    if not params.get("api_token"):
+        raise ValueError("api_token 参数不能为空")
+    
+    if not params.get("task_id"):
+        raise ValueError("task_id 参数不能为空")
+    
     token = params["api_token"]
     task_id = params["task_id"]
-    max_retries = params.get("max_retries", 300)
+    max_retries = params.get("max_retries") or 1800
     
     url = f"https://mineru.net/api/v4/extract/task/{task_id}"
     headers = {
@@ -51,13 +57,34 @@ def main(params: Inputs, context: Context) -> Outputs:
             task_data = response_data.get("data", {})
             task_state = task_data.get("state", "")
             
-            # 打印调试信息
+            # 打印详细调试信息
             print(f"状态码: {status_code}, 任务状态: {task_state}, 重试次数: {retry_count + 1}")
+            print(f"完整任务数据: {task_data}")
             
-            # 如果任务完成或失败，退出循环
-            if task_state == "done" or task_state == "failed":
+            # 如果API返回错误状态码，记录详细信息
+            if status_code != 200:
+                print(f"API返回非200状态码: {status_code}, 响应数据: {response_data}")
+                # 但不立即抛出异常，继续尝试获取任务状态
+            
+            # 如果任务成功完成，退出循环
+            if task_state == "done":
                 print(f"任务完成，最终状态: {task_state}")
                 break
+                
+            # 如果任务失败，抛出异常并包含详细错误信息
+            if task_state in ["failed", "error", "cancelled"]:
+                err_msg = task_data.get("err_msg", "")
+                if err_msg:
+                    raise RuntimeError(f"MinerU任务失败: {err_msg} (状态: {task_state})")
+                else:
+                    raise RuntimeError(f"任务状态异常，状态: {task_state}")
+                
+            # 如果任务处于等待或处理状态，继续轮询
+            if task_state in ["waiting", "pending", "processing", "running", "queued", "started"]:
+                print(f"任务处理中，状态: {task_state}")
+            else:
+                # 对于未知状态，记录日志但继续轮询
+                print(f"遇到未知状态，继续轮询: {task_state}")
                 
             # 等待1秒后重试
             time.sleep(1)
@@ -75,17 +102,10 @@ def main(params: Inputs, context: Context) -> Outputs:
         
     except requests.exceptions.RequestException as e:
         error_msg = f"请求失败: {str(e)}"
-        print(error_msg)
-        return {
-            "status_code": 0,
-            "response_data": {"error": error_msg},
-            "task_data": {}
-        }
+        raise RuntimeError(error_msg)
+    except RuntimeError:
+        # MinerU API 错误直接重新抛出，不包装
+        raise
     except Exception as e:
         error_msg = f"处理响应时出错: {str(e)}"
-        print(error_msg)
-        return {
-            "status_code": 0,
-            "response_data": {"error": error_msg},
-            "task_data": {}
-        }
+        raise RuntimeError(error_msg)

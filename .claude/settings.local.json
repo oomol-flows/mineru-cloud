@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(cat:*)",
+      "Bash(mkdir:*)",
+      "Bash(poetry add:*)",
+      "Bash(poetry install:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "mcp__github__get_file_contents",
+      "WebFetch(domain:mineru.net)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

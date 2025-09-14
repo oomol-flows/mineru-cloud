@@ -8,26 +8,8 @@
         }
       }
     },
-    "url_to_file#1": {
-      "contentWidth": 450,
-      "rfNode": {
-        "position": {
-          "x": 486,
-          "y": 179
-        }
-      },
-      "sections": {
-        "inputs": {
-          "collapsed": {
-            "query": {
-              "[]": true
-            }
-          }
-        }
-      }
-    },
     "extract_zip#1": {
-      "contentWidth": 450,
+      "contentWidth": 350,
       "rfNode": {
         "position": {
           "x": 1002,
@@ -36,18 +18,11 @@
       }
     },
     "list_files_from_folder#1": {
-      "contentWidth": 463.1607666015625,
+      "contentWidth": 350,
       "rfNode": {
         "position": {
           "x": 1518,
           "y": 260
-        }
-      },
-      "sections": {
-        "inputs": {
-          "groupCollapsed": {
-            "more": true
-          }
         }
       }
     },
@@ -65,6 +40,23 @@
         "position": {
           "x": 2563,
           "y": 246.5
+        }
+      }
+    },
+    "url2file#1": {
+      "contentWidth": 350,
+      "rfNode": {
+        "position": {
+          "x": 497.7609188823293,
+          "y": 228.13364454486847
+        }
+      }
+    },
+    "pdf-to-markdown#1": {
+      "rfNode": {
+        "position": {
+          "x": 1689.687931838574,
+          "y": 1397.3091747051228
         }
       }
     }

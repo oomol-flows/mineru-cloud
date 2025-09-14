@@ -36,6 +36,9 @@ def main(params: Inputs, context: Context) -> Outputs:
         包含任务ID、状态码和提取数据的字典
     """
     
+    if not params.get("api_token"):
+        raise ValueError("api_token 参数不能为空")
+    
     token = params["api_token"]
     url = "https://mineru.net/api/v4/extract/task"
     
@@ -44,9 +47,13 @@ def main(params: Inputs, context: Context) -> Outputs:
         "Authorization": f"Bearer {token}"
     }
     
+    # 验证必需参数
+    if not params.get("pdf_url"):
+        raise ValueError("pdf_url 参数不能为空")
+    
     # 构建请求数据，包含所有支持的参数
     data = {
-        "url": params.get("pdf_url"),
+        "url": params["pdf_url"],
     }
     
     # 添加可选参数
@@ -80,15 +87,10 @@ def main(params: Inputs, context: Context) -> Outputs:
             task_id = response_json.get("data", {}).get("task_id", "")
             extract_data = response_json.get("data", {})
             
-            context.preview({
-                "type": "json",
-                "data": {
-                    "状态码": status_code,
-                    "任务ID": task_id,
-                    "请求参数": data,
-                    "响应数据": response_json
-                }
-            })
+            print(f"状态码: {status_code}")
+            print(f"任务ID: {task_id}")
+            print(f"请求参数: {data}")
+            print(f"响应数据: {response_json}")
             
             return {
                 "task_id": task_id,
@@ -97,34 +99,14 @@ def main(params: Inputs, context: Context) -> Outputs:
                 "extract_data": extract_data
             }
         else:
-            error_data = {
-                "error": f"API请求失败，状态码: {status_code}",
-                "response": response.text
-            }
+            error_msg = f"API请求失败，状态码: {status_code}，响应: {response.text}"
+            raise RuntimeError(error_msg)
             
-            context.preview({
-                "type": "json",
-                "data": error_data
-            })
-            
-            return {
-                "task_id": "",
-                "status_code": status_code,
-                "response_data": error_data,
-                "extract_data": {}
-            }
-            
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f"网络请求异常: {str(e)}")
     except Exception as e:
-        error_data = {"error": str(e)}
-        
-        context.preview({
-            "type": "json",
-            "data": error_data
-        })
-        
-        return {
-            "task_id": "",
-            "status_code": 0,
-            "response_data": error_data,
-            "extract_data": {}
-        }
+        # 如果是我们之前抛出的异常，直接重新抛出
+        if isinstance(e, (ValueError, RuntimeError)):
+            raise
+        # 其他异常包装后抛出
+        raise RuntimeError(f"处理请求时发生异常: {str(e)}")

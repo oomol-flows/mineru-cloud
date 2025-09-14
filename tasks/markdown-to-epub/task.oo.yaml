@@ -47,7 +47,7 @@ inputs_def:
         - minimal
         - modern
         - classic
-    value: duokan
+    value: classic
     nullable: true
 
 outputs_def:
@@ -62,6 +62,6 @@ executor:
     entry: __init__.py
     spawn: false
 
-title: "Markdown 转 EPUB"
+title: "Markdown to EPUB"
 icon: ":carbon:document-export:"
 description: "将 Markdown 文件转换为 EPUB 电子书格式"

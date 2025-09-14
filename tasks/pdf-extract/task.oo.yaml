@@ -1,4 +1,4 @@
-title: "PDF内容提取"
+title: "PDF Extract"
 description: "使用MinerU API从PDF文件中提取文本、表格和公式内容，支持多种格式导出"
 icon: ":carbon:document-pdf:"
 
