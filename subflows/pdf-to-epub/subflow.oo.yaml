@@ -45,7 +45,7 @@ nodes:
         from_flow:
           []
         from_node:
-          - node_id: +python#2
+          - node_id: pre-detection_pdf#1
             output_handle: file
     task: upload-to-cloud::upload-to-cloud
   - node_id: get-task-result#2
@@ -86,33 +86,6 @@ nodes:
         from_node:
           - node_id: get-task-result#2
             output_handle: task_data
-  - node_id: +python#2
-    title: "Pre-detection pdf"
-    icon: ":carbon:document-security:"
-    task:
-      ui:
-        default_width: 450
-      inputs_def:
-        - handle: file
-          json_schema:
-            type: string
-            ui:widget: file
-          nullable: false
-          executor_name: nodejs
-      outputs_def:
-        - handle: file
-          json_schema:
-            type: string
-            ui:widget: file
-          nullable: false
-      executor:
-        name: python
-        options:
-          entry: scriptlets/+scriptlet#2.py
-    inputs_from:
-      - handle: file
-        from_flow:
-          - input_handle: file
   - node_id: extract_zip#1
     title: "Extract ZIP #1"
     inputs_from:
@@ -177,12 +150,16 @@ nodes:
             output_handle: markdown_file
       - handle: output_path
         value: /oomol-driver/oomol-storage/epub/hello.epub
+        from_flow:
+          - input_handle: output_path
       - handle: title
         value: null
       - handle: author
         value: null
       - handle: theme
-        value: modern
+        value: minimal
+      - handle: cover_image
+        value:
     task: self::markdown-to-epub
   - node_id: url2file#1
     title: "URL to file #1"
@@ -225,6 +202,12 @@ nodes:
       - handle: retry_sleep
         value: 0
     subflow: downloader::url2file
+  - node_id: pre-detection_pdf#1
+    task: self::pre-detection_pdf
+    inputs_from:
+      - handle: file
+        from_flow:
+          - input_handle: file
 inputs_def:
   - handle: file
     json_schema:
@@ -246,12 +229,18 @@ inputs_def:
     value: ${{OO_SECRET:Custom,mineru,api-key}}
     nullable: false
     executor_name: python
-  - handle: saved_folder
+  - handle: output_path
     json_schema:
       type: string
-      ui:widget: dir
-    nullable: true
-    value:
+      ui:widget: save
+      ui:options:
+        filters:
+          - extensions:
+              - epub
+            name: EPUB
+    nullable: false
+    description: 输出的 EPUB 文件保存路径
+    value: /oomol-driver/oomol-storage/epub/hello.epub
     executor_name: python
   - handle: is_ocr
     description: 是否启动OCR功能

@@ -5,7 +5,8 @@ class Inputs(typing.TypedDict):
     output_path: str
     title: str | None
     author: str | None
-    theme: typing.Literal["duokan", "minimal", "modern", "classic"] | None
+    theme: typing.Literal["duokan", "minimal"] | None
+    cover_image: str | None
 class Outputs(typing.TypedDict):
     epub_file: str
 #endregion
@@ -18,11 +19,11 @@ from themes import ThemeManager
 def main(params: Inputs, context: Context) -> Outputs:
     """
     使用 pypandoc 将 Markdown 文件转换为 EPUB 电子书格式
-    
+
     Args:
-        params: 输入参数，包含 markdown_file, output_path, title, author
+        params: 输入参数，包含 markdown_file, output_path, title, author, theme, cover_image
         context: OOMOL 上下文对象
-        
+
     Returns:
         输出结果，包含生成的 EPUB 文件路径
     """
@@ -39,6 +40,18 @@ def main(params: Inputs, context: Context) -> Outputs:
     # 获取标题和作者
     title = params.get("title") or markdown_path.stem
     author = params.get("author") or "Unknown Author"
+
+    # 验证封面图片文件（如果提供）
+    cover_image_path = None
+    if params.get("cover_image"):
+        cover_image_path = Path(params["cover_image"])
+        if not cover_image_path.exists():
+            raise FileNotFoundError(f"封面图片文件不存在: {params['cover_image']}")
+
+        # 验证图片格式
+        valid_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}
+        if cover_image_path.suffix.lower() not in valid_extensions:
+            raise ValueError(f"不支持的图片格式: {cover_image_path.suffix}. 支持的格式: {', '.join(valid_extensions)}")
     
     # 配置 EPUB 转换选项
     epub_options = [
@@ -78,7 +91,11 @@ def main(params: Inputs, context: Context) -> Outputs:
         f.write(css_content)
     
     epub_options.extend(['--css', str(css_path)])
-    
+
+    # 添加封面图片选项（如果提供）
+    if cover_image_path:
+        epub_options.extend(['--epub-cover-image', str(cover_image_path)])
+
     try:
         # 使用 pypandoc 进行转换
         pypandoc.convert_file(

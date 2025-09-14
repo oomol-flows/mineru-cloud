@@ -83,7 +83,9 @@ nodes:
       - handle: author
         value:
       - handle: theme
-        value: modern
+        value: minimal
+      - handle: cover_image
+        value: null
     task: self::markdown-to-epub
   - node_id: url2file#1
     title: "URL to file #1"
@@ -124,19 +126,19 @@ nodes:
       - handle: retry_sleep
         value: 0
     subflow: downloader::url2file
-  - node_id: pdf-to-markdown#1
-    title: "PDF to Markdown #1"
+  - node_id: markdown-to-epub#2
+    title: "Markdown to EPUB #2"
     inputs_from:
-      - handle: file
-        value: /oomol-driver/oomol-storage/compressed_output.pdf
-      - handle: api_token
-        value: ${{OO_SECRET:Custom,mineru,api-key}}
-      - handle: is_ocr
-        value: true
-      - handle: enable_formula
-        value: true
-      - handle: enable_table
-        value: true
-      - handle: max_retries
+      - handle: markdown_file
+        value: /oomol-driver/oomol-storage/md/README_zh-CN.md
+      - handle: output_path
+        value: /oomol-driver/oomol-storage/md/md.epub
+      - handle: title
         value: null
-    subflow: self::pdf-to-markdown
+      - handle: author
+        value: null
+      - handle: theme
+        value: duokan
+      - handle: cover_image
+        value: /oomol-driver/oomol-storage/flipped_1757305917896.jpg
+    task: self::markdown-to-epub

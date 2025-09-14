@@ -1,0 +1,23 @@
+ui:
+  default_width: 450
+inputs_def:
+  - handle: file
+    json_schema:
+      type: string
+      ui:widget: file
+    nullable: false
+    executor_name: nodejs
+outputs_def:
+  - handle: file
+    json_schema:
+      type: string
+      ui:widget: file
+    nullable: false
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+title: Pre-detection pdf
+icon: ":carbon:document-security:"
+private: true

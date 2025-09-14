@@ -9,7 +9,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "mcp__github__get_file_contents",
-      "WebFetch(domain:mineru.net)"
+      "WebFetch(domain:mineru.net)",
+      "mcp__oomol__runFlow",
+      "mcp__oomol__getTaskResult"
     ],
     "deny": [],
     "ask": []

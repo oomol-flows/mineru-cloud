@@ -45,9 +45,27 @@ inputs_def:
       enum:
         - duokan
         - minimal
-        - modern
-        - classic
-    value: classic
+      ui:options:
+        {}
+    value: minimal
+    nullable: true
+
+  - handle: cover_image
+    description: "封面图片文件路径（可选，默认无封面）"
+    json_schema:
+      type: string
+      ui:widget: file
+      ui:options:
+        excludeAll: true
+        filters:
+          - name: 图片文件
+            extensions:
+              - jpg
+              - jpeg
+              - png
+              - gif
+              - webp
+    value: null
     nullable: true
 
 outputs_def:

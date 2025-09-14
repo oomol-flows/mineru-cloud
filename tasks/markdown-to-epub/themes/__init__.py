@@ -1,8 +1,6 @@
 from .base import EpubTheme
 from .duokan import DuokanTheme
 from .minimal import MinimalTheme
-from .modern import ModernTheme
-from .classic import ClassicTheme
 from typing import Dict, Type
 
 class ThemeManager:
@@ -11,13 +9,16 @@ class ThemeManager:
     _themes: Dict[str, Type[EpubTheme]] = {
         "duokan": DuokanTheme,
         "minimal": MinimalTheme,
-        "modern": ModernTheme,
-        "classic": ClassicTheme,
     }
     
+    _default_theme = "minimal"
+    
     @classmethod
-    def get_theme(cls, theme_name: str) -> EpubTheme:
+    def get_theme(cls, theme_name: str = None) -> EpubTheme:
         """根据主题名称获取主题实例"""
+        if theme_name is None:
+            theme_name = cls._default_theme
+            
         if theme_name not in cls._themes:
             raise ValueError(f"未知的主题: {theme_name}. 可用主题: {list(cls._themes.keys())}")
         
@@ -39,4 +40,4 @@ class ThemeManager:
         cls._themes[theme_name] = theme_class
 
 # 导出主要接口
-__all__ = ["EpubTheme", "ThemeManager", "DuokanTheme", "MinimalTheme", "ModernTheme", "ClassicTheme"]
+__all__ = ["EpubTheme", "ThemeManager", "DuokanTheme", "MinimalTheme"]
