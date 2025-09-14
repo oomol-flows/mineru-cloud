@@ -1,10 +1,10 @@
 title: "Get Task Result"
-description: "从 MinerU API 获取 PDF 提取任务的结果"
+description: "%mineru-api-pdf%"
 icon: ":carbon:document-download:"
 
 inputs_def:
   - handle: api_token
-    description: "MinerU API Token"
+    description: "%mineru-api-token%"
     json_schema:
       contentMediaType: oomol/secret
       type: string

@@ -1,0 +1,5 @@
+{
+  "mineru-api-pdf": "从 MinerU API 获取 PDF 提取任务的结果",
+  "mineru-api-token": "MinerU API Token",
+  "markdown-epub": "将 Markdown 文件转换为 EPUB 电子书格式"
+}

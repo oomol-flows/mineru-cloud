@@ -14,7 +14,7 @@ nodes:
         value: true
       - handle: max_retries
         value:
-    subflow: self::pdf-to-markdown
+    subflow: self::pdf-to-epub
   - node_id: extract_zip#1
     title: "Extract ZIP #1"
     inputs_from:
@@ -125,9 +125,10 @@ nodes:
         value: 0
     subflow: downloader::url2file
   - node_id: pdf-to-markdown#1
-    title: "PDF to markdown #1"
+    title: "PDF to Markdown #1"
     inputs_from:
       - handle: file
+        value: /oomol-driver/oomol-storage/compressed_output.pdf
       - handle: api_token
         value: ${{OO_SECRET:Custom,mineru,api-key}}
       - handle: is_ocr

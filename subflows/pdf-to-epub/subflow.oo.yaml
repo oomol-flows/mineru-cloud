@@ -113,6 +113,77 @@ nodes:
       - handle: file
         from_flow:
           - input_handle: file
+  - node_id: extract_zip#1
+    title: "Extract ZIP #1"
+    inputs_from:
+      - handle: zip_file
+        from_node:
+          - node_id: url2file#1
+            output_handle: file
+      - handle: zip_dir
+        value: null
+      - handle: password
+        value: null
+    task: zip::extract_zip
+  - node_id: list_files_from_folder#1
+    title: "List files from folder #1"
+    inputs_from:
+      - handle: folder
+        from_node:
+          - node_id: extract_zip#1
+            output_handle: output
+      - handle: sort
+        value: false
+      - handle: traverse
+        value: false
+      - handle: absolute_path
+        value: true
+    task: oomol-file::list_files_from_folder
+  - node_id: +python#3
+    title: "Python #3"
+    icon: ":logos:python:"
+    inputs_from:
+      - handle: file_paths
+        from_node:
+          - node_id: list_files_from_folder#1
+            output_handle: file_paths
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: file_paths
+          description: If the folder does not exist, an empty array is returned here
+          json_schema:
+            type: array
+            items:
+              type: string
+              ui:widget: file
+      outputs_def:
+        - handle: markdown_file
+          json_schema:
+            type: string
+            ui:widget: file
+      executor:
+        name: python
+        options:
+          entry: scriptlets/+scriptlet#3.py
+          spawn: false
+  - node_id: markdown-to-epub#1
+    title: "Markdown 转 EPUB #1"
+    inputs_from:
+      - handle: markdown_file
+        from_node:
+          - node_id: +python#3
+            output_handle: markdown_file
+      - handle: output_path
+        value: /oomol-driver/oomol-storage/epub/hello.epub
+      - handle: title
+        value: null
+      - handle: author
+        value: null
+      - handle: theme
+        value: modern
+    task: self::markdown-to-epub
   - node_id: url2file#1
     title: "URL to file #1"
     inputs_from:
@@ -160,11 +231,11 @@ inputs_def:
       type: string
       ui:widget: file
       ui:options:
-        excludeAll: true
         filters:
           - name: PDF
             extensions:
               - pdf
+        excludeAll: true
     nullable: false
     executor_name: nodejs
   - handle: api_token
@@ -214,17 +285,17 @@ inputs_def:
     nullable: true
     executor_name: python
 outputs_def:
-  - handle: md_zip
+  - handle: epub_file
     json_schema:
       type: string
     nullable: false
     executor_name: python
 outputs_from:
-  - handle: md_zip
+  - handle: epub_file
     from_node:
-      - node_id: url2file#1
-        output_handle: saved_folder
-title: PDF to Markdown
+      - node_id: markdown-to-epub#1
+        output_handle: epub_file
+title: PDF to EPUB
 description: |-
   将PDF 文件转换为 epub
    电子书格式

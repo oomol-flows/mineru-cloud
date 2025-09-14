@@ -1,0 +1,5 @@
+{
+  "mineru-api-pdf": "Get the results of PDF extraction tasks from the MinerU API",
+  "mineru-api-token": "MinerU API Token",
+  "markdown-epub": "Convert Markdown files to EPUB e-book format"
+}
