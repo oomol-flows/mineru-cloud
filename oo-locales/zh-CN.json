@@ -1,5 +1,7 @@
 {
   "mineru-api-pdf": "从 MinerU API 获取 PDF 提取任务的结果",
   "mineru-api-token": "MinerU API Token",
-  "markdown-epub": "将 Markdown 文件转换为 EPUB 电子书格式"
+  "markdown-epub": "将 Markdown 文件转换为 EPUB 电子书格式",
+  "key": "一个强大的文档处理工具包，利用先进的 AI 驱动提取技术将 PDF 文档转换为多种格式。该工具包专为需要将 PDF 文档转换为可编辑和结构化格式、且无需技术知识的用户设计。",
+  "mineru-cloud": "Mineru 云"
 }
