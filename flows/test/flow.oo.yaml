@@ -3,8 +3,11 @@ nodes:
     title: "PDF to EPUB #1"
     inputs_from:
       - handle: file
+        value: /oomol-driver/desktop/背景调查/在骑士英勇的旧年代.pdf
       - handle: api_token
+        value: ${{OO_SECRET:Custom,mineru,api-key}}
       - handle: output_path
+        value: /oomol-driver/desktop/背景调查/test.epub
       - handle: title
         value: null
       - handle: author

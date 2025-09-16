@@ -202,7 +202,7 @@ nodes:
           - node_id: list_files_from_folder#1
             output_handle: file_paths
       - handle: char_limit
-        value:
+        value: 500
   - node_id: llm#1
     title: "LLM #1"
     inputs_from:
