@@ -11,8 +11,8 @@ import typing
 class Inputs(typing.TypedDict):
     file: str
 class Outputs(typing.TypedDict):
-    file: str
-    cover_image: str | None
+    file: typing.NotRequired[str]
+    cover_image: typing.NotRequired[str | None]
 #endregion
 
 def main(params: Inputs, context: Context) -> Outputs:

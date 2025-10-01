@@ -14,10 +14,10 @@ class Inputs(typing.TypedDict):
     extra_formats: list[typing.Any] | None
     seed: str | None
 class Outputs(typing.TypedDict):
-    task_id: str
-    status_code: float
-    response_data: dict
-    extract_data: dict
+    task_id: typing.NotRequired[str]
+    status_code: typing.NotRequired[float]
+    response_data: typing.NotRequired[dict]
+    extract_data: typing.NotRequired[dict]
 #endregion
 
 import requests

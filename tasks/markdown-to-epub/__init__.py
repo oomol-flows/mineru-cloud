@@ -8,7 +8,7 @@ class Inputs(typing.TypedDict):
     theme: typing.Literal["duokan", "minimal"] | None
     cover_image: str | None
 class Outputs(typing.TypedDict):
-    epub_file: str
+    epub_file: typing.NotRequired[str]
 #endregion
 
 from oocana import Context

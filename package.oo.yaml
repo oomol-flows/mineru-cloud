@@ -1,11 +1,11 @@
-version: 0.0.4
+version: 0.0.5
 scripts:
   bootstrap: |
     npm install
     poetry install --no-root
 dependencies:
-  upload-to-cloud: 0.0.2
-  oomol-file: 0.0.18
+  upload-to-cloud: 0.0.3
+  oomol-file: 0.0.20
   zip: 0.0.13
   downloader: 0.0.3
   llm: 0.3.5
@@ -14,4 +14,4 @@ name: mineru-cloud
 repository: https://github.com/oomol-flows/mineru-cloud.git
 description: "%key%"
 displayName: "%mineru-cloud%"
-releaseNotes: add flow
+releaseNotes: update

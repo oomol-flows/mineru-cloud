@@ -5,7 +5,7 @@ import typing
 class Inputs(typing.TypedDict):
     response_data: dict
 class Outputs(typing.TypedDict):
-    full_zip_url: str
+    full_zip_url: typing.NotRequired[str]
 #endregion
 
 def main(params: Inputs, context: Context) -> Outputs:

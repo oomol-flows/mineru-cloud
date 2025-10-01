@@ -7,8 +7,8 @@ class Inputs(typing.TypedDict):
     file_paths: list[str]
     char_limit: float | None
 class Outputs(typing.TypedDict):
-    markdown_file: str
-    first_500_chars: str
+    markdown_file: typing.NotRequired[str]
+    first_500_chars: typing.NotRequired[str]
 #endregion
 
 def main(params: Inputs, context: Context) -> Outputs:
