@@ -1,6 +1,6 @@
 inputs_def:
   - handle: markdown_file
-    description: "输入的 Markdown 文件路径"
+    description: "%input-markdown-file-to-convert-to-epub%"
     json_schema:
       type: string
       ui:widget: file
@@ -13,7 +13,7 @@ inputs_def:
     nullable: false
 
   - handle: output_path
-    description: "输出的 EPUB 文件保存路径"
+    description: "%output-path-for-the-generated-epub-file%"
     json_schema:
       type: string
       ui:widget: save
@@ -25,21 +25,21 @@ inputs_def:
     nullable: false
 
   - handle: title
-    description: "电子书标题（可选，默认使用文件名）"
+    description: "%book-title-optional-defaults-to-filename%"
     json_schema:
       type: string
     value:
     nullable: true
 
   - handle: author
-    description: "电子书作者（可选）"
+    description: "%book-author-optional%"
     json_schema:
       type: string
     value:
     nullable: true
 
   - handle: theme
-    description: "EPUB 主题样式（可选，默认为多看风格）"
+    description: "%epub-theme-style-duokan-or-minimal%"
     json_schema:
       type: string
       enum:
@@ -51,26 +51,26 @@ inputs_def:
     nullable: true
 
   - handle: cover_image
-    description: "封面图片文件路径（可选，默认无封面）"
+    description: "%cover-image-file-optional%"
     json_schema:
       type: string
       ui:widget: file
       ui:options:
         excludeAll: true
         filters:
-          - name: 图片文件
+          - name: Image Files
             extensions:
               - jpg
               - jpeg
               - png
               - gif
               - webp
-    value: null
+    value:
     nullable: true
 
 outputs_def:
   - handle: epub_file
-    description: "生成的 EPUB 文件路径"
+    description: "Path to the generated EPUB file"
     json_schema:
       type: string
 
@@ -80,6 +80,6 @@ executor:
     entry: __init__.py
     spawn: false
 
-title: "Markdown to EPUB"
+title: "%markdown-to-epub2%"
 icon: ":carbon:document-export:"
-description: "%markdown-epub%"
+description: "%convert-markdown-files-to-epub-format-with-customizable-themes-a%"

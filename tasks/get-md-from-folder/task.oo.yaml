@@ -2,14 +2,14 @@ ui:
   default_width: 450
 inputs_def:
   - handle: file_paths
-    description: If the folder does not exist, an empty array is returned here
+    description: "%array-of-file-paths-to-process-returns-empty-array-if-folder-doe%"
     json_schema:
       type: array
       items:
         type: string
         ui:widget: file
   - handle: char_limit
-    description: ""
+    description: "%maximum-character-limit-for-text-extraction-500-10000%"
     json_schema:
       type: number
       ui:options:
@@ -20,11 +20,12 @@ inputs_def:
     nullable: true
 outputs_def:
   - handle: markdown_file
+    description: "Generated markdown file containing extracted content"
     json_schema:
       type: string
       ui:widget: file
   - handle: first_500_chars
-    description: First 500 characters from the markdown file
+    description: "First 500 characters from the markdown file for preview"
     json_schema:
       type: string
 executor:
@@ -32,6 +33,7 @@ executor:
   options:
     entry: __init__.py
     spawn: false
-title: Get md from folder
+title: "%get-markdown-from-folder%"
+description: "%extract-and-convert-files-from-a-folder-into-a-unified-markdown%"
 icon: ":carbon:ibm-secure-infrastructure-on-vpc-for-regulated-industries:"
 private: true

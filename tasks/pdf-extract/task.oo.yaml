@@ -1,16 +1,16 @@
-title: "PDF Extract"
-description: "使用MinerU API从PDF文件中提取文本、表格和公式内容，支持多种格式导出"
+title: "%pdf-extract2%"
+description: "%extract-content-from-pdf-documents-using-mineru-api-with-ocr-and%"
 icon: ":carbon:document-pdf:"
 
 inputs_def:
   - handle: pdf_url
-    description: "PDF文件的URL地址，支持.pdf、.doc、.docx、.ppt、.pptx、.png、.jpg、.jpeg等格式"
+    description: "%url-to-pdf-file-or-supported-document-pdf-doc-docx-ppt-pptx-png%"
     json_schema:
       type: string
     nullable: false
 
   - handle: api_token
-    description: "MinerU API Token，从官网申请获取"
+    description: "%mineru-api-authentication-token2%"
     json_schema:
       contentMediaType: oomol/secret
       type: string
@@ -18,21 +18,21 @@ inputs_def:
     nullable: false
 
   - handle: is_ocr
-    description: "是否启动OCR功能"
+    description: "%enable-ocr-optical-character-recognition-for-text-extraction%"
     json_schema:
       type: boolean
     value: true
     nullable: true
 
   - handle: enable_formula
-    description: "是否开启公式识别"
+    description: "%enable-mathematical-formula-recognition-and-extraction%"
     json_schema:
       type: boolean
     value: true
     nullable: true
 
   - handle: enable_table
-    description: "是否开启表格识别"
+    description: "%enable-table-structure-recognition-and-extraction%"
     json_schema:
       type: boolean
     value: true
@@ -42,7 +42,7 @@ inputs_def:
     collapsed: false
 
   - handle: model_version
-    description: "MinerU模型版本"
+    description: "%mineru-processing-model-version-pipeline-or-vlm%"
     json_schema:
       type: string
       enum:
@@ -52,7 +52,7 @@ inputs_def:
     nullable: true
 
   - handle: language
-    description: "指定文档语言"
+    description: "%document-language-for-optimal-text-recognition%"
     json_schema:
       type: string
       enum:
@@ -89,34 +89,34 @@ inputs_def:
     nullable: true
 
   - handle: data_id
-    description: "解析对象对应的数据ID，用于唯一标识业务数据（可选）"
+    description: "%custom-data-identifier-for-tracking%"
     json_schema:
       type: string
     value:
     nullable: true
 
   - handle: callback
-    description: 解析结果回调通知URL（可选）
+    description: "%callback-url-for-task-completion-notifications%"
     json_schema:
       type: string
     value:
     nullable: true
 
   - handle: page_ranges
-    description: 指定页码范围，格式为逗号分隔的字符串，如："2,4-6"
+    description: "%specific-page-ranges-to-extract-e-g-1-3-5-7-9%"
     json_schema:
       type: string
     value:
     nullable: true
 
   - handle: extra_formats
-    description: 额外的导出格式，可选docx、html、latex
+    description: "%additional-output-formats-docx-html-latex%"
     json_schema:
       type: array
     value:
     nullable: true
   - handle: seed
-    description: 随机字符串，用于回调通知请求中的签名（callback时必须提供）
+    description: "%random-seed-for-reproducible-extraction-results%"
     json_schema:
       type: string
     value:
@@ -124,22 +124,22 @@ inputs_def:
 
 outputs_def:
   - handle: task_id
-    description: "提取任务ID"
+    description: "Unique extraction task identifier"
     json_schema:
       type: string
 
   - handle: status_code
-    description: "HTTP响应状态码"
+    description: "HTTP response status code"
     json_schema:
       type: number
 
   - handle: response_data
-    description: "完整的API响应数据"
+    description: "Complete API response data"
     json_schema:
       type: object
 
   - handle: extract_data
-    description: "提取的数据内容"
+    description: "Extracted document content and metadata"
     json_schema:
       type: object
 

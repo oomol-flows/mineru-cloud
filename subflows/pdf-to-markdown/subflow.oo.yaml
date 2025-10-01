@@ -1,6 +1,6 @@
 nodes:
   - node_id: pdf-extract#1
-    title: "PDF内容提取 #1"
+    title: "%pdf-12%"
     inputs_from:
       - handle: api_token
         value: ${{OO_SECRET:Custom,mineru,api-key}}
@@ -38,7 +38,7 @@ nodes:
           - input_handle: is_ocr
     task: self::pdf-extract
   - node_id: upload-to-cloud#1
-    title: "Upload File to Cloud #1"
+    title: "%upload-file-to-cloud-12%"
     inputs_from:
       - handle: file
         value: /oomol-driver/oomol-storage/oopilot-instructions.pdf
@@ -49,7 +49,7 @@ nodes:
             output_handle: file
     task: upload-to-cloud::upload-to-cloud
   - node_id: get-task-result#2
-    title: "获取任务结果 #2"
+    title: "%22%"
     inputs_from:
       - handle: api_token
         value: ${{OO_SECRET:Custom,mineru,api-key}}
@@ -63,14 +63,14 @@ nodes:
           - input_handle: max_retries
     task: self::get-task-result
   - node_id: +python#1
-    title: "Python #1"
+    title: "%python-12%"
     icon: ":logos:python:"
     task:
       ui:
         default_width: 450
       inputs_def:
         - handle: response_data
-          description: 完整的响应数据
+          description: "%key15%"
           json_schema:
             type: object
       outputs_def:
@@ -87,7 +87,7 @@ nodes:
           - node_id: get-task-result#2
             output_handle: task_data
   - node_id: +python#2
-    title: "Pre-detection pdf"
+    title: "%pre-detection-pdf2%"
     icon: ":carbon:document-security:"
     task:
       ui:
@@ -114,7 +114,7 @@ nodes:
         from_flow:
           - input_handle: file
   - node_id: url2file#1
-    title: "URL to file #1"
+    title: "%url-to-file-12%"
     inputs_from:
       - handle: url
         from_node:
@@ -156,6 +156,7 @@ nodes:
     subflow: downloader::url2file
 inputs_def:
   - handle: file
+    description: "%input-pdf-file-to-convert-to-markdown%"
     json_schema:
       type: string
       ui:widget: file
@@ -168,7 +169,7 @@ inputs_def:
     nullable: false
     executor_name: nodejs
   - handle: api_token
-    description: MinerU API Token，从官网申请获取
+    description: "%mineru-api-authentication-token4%"
     json_schema:
       contentMediaType: oomol/secret
       type: string
@@ -176,34 +177,36 @@ inputs_def:
     nullable: false
     executor_name: python
   - handle: saved_folder
+    description: "%directory-to-save-the-extracted-markdown-files%"
     json_schema:
       type: string
       ui:widget: dir
-    nullable: true
     value:
+    nullable: true
     executor_name: python
   - handle: is_ocr
-    description: 是否启动OCR功能
+    description: "%enable-ocr-for-text-extraction2%"
     json_schema:
       type: boolean
     value: true
     nullable: true
     executor_name: python
   - handle: enable_formula
-    description: 是否开启公式识别
+    description: "%enable-mathematical-formula-recognition2%"
     json_schema:
       type: boolean
     value: true
     nullable: true
     executor_name: python
   - handle: enable_table
-    description: 是否开启表格识别
+    description: "%enable-table-structure-recognition2%"
     json_schema:
       type: boolean
     value: true
     nullable: true
     executor_name: python
   - handle: max_retries
+    description: "%maximum-retry-attempts-for-api-calls2%"
     json_schema:
       type: number
       ui:options:
@@ -215,6 +218,7 @@ inputs_def:
     executor_name: python
 outputs_def:
   - handle: md_zip
+    description: "Compressed file containing extracted markdown documents"
     json_schema:
       type: string
     nullable: false
@@ -224,7 +228,5 @@ outputs_from:
     from_node:
       - node_id: url2file#1
         output_handle: saved_folder
-title: PDF to Markdown
-description: |-
-  将PDF 文件转换为 epub
-   电子书格式
+title: "%pdf-to-markdown2%"
+description: "%extract-and-convert-pdf-documents-to-structured-markdown-format%"

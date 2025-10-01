@@ -1,21 +1,22 @@
-title: "Get Task Result"
-description: "%mineru-api-pdf%"
+title: "%get-task-result2%"
+description: "%retrieve-task-results-from-mineru-api-with-retry-mechanism%"
 icon: ":carbon:document-download:"
 
 inputs_def:
   - handle: api_token
-    description: "%mineru-api-token%"
+    description: "%mineru-api-authentication-token%"
     json_schema:
       contentMediaType: oomol/secret
       type: string
     value: ${{OO_SECRET:Custom,mineru,api-key}}
 
   - handle: task_id
-    description: "任务ID"
+    description: "%unique-identifier-for-the-task-to-retrieve%"
     json_schema:
       type: string
     nullable: false
   - handle: max_retries
+    description: "%maximum-number-of-retry-attempts-minimum-30%"
     json_schema:
       type: number
       ui:options:
@@ -27,17 +28,17 @@ inputs_def:
 
 outputs_def:
   - handle: status_code
-    description: "HTTP状态码"
+    description: "HTTP response status code"
     json_schema:
       type: number
 
   - handle: response_data
-    description: "完整的响应数据"
+    description: "Complete API response data"
     json_schema:
       type: object
 
   - handle: task_data
-    description: "任务结果数据"
+    description: "Extracted task result data"
     json_schema:
       type: object
 

@@ -2,6 +2,7 @@ ui:
   default_width: 450
 inputs_def:
   - handle: file
+    description: "%input-pdf-file-for-preprocessing%"
     json_schema:
       type: string
       ui:widget: file
@@ -9,6 +10,7 @@ inputs_def:
     executor_name: nodejs
 outputs_def:
   - handle: file
+    description: "Processed PDF file ready for extraction"
     json_schema:
       type: string
       ui:widget: file
@@ -24,6 +26,7 @@ executor:
   options:
     entry: __init__.py
     spawn: false
-title: Pre-detection pdf
+title: "%pdf-pre-detection%"
+description: "%preprocess-and-validate-pdf-files-before-extraction-generating-c%"
 icon: ":carbon:document-security:"
 private: true
